@@ -1,0 +1,89 @@
+.exam {
+  display: block;
+  width: 278px;
+  height: 111px;
+  background-color: var(--item-background);
+  padding: 20px 25px 20px 60px;
+  margin: 20px;
+}
+a {
+  text-decoration: none;
+  color: var(--text);
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.container > .title {
+  font-size: 20.125px;
+  position: relative;
+}
+
+.container > .title::before {
+  position: absolute;
+  display: block;
+  content: "";
+  width: 16px;
+  height: 16px;
+
+  left: -32px;
+  top: 4px;
+
+  background-color: var(--primary);
+}
+
+.footer {
+  border-top: 1px solid var(--secondary-text);
+  padding-top: 5px;
+  display: flex;
+
+  color: var(--secondary-text);
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.points::before {
+  margin-right: 10px;
+
+  display: inline-block;
+  content: "";
+  width: 20px;
+  height: 20px;
+  background: url(./trophy.svg) no-repeat center center/20px auto;
+}
+
+.questions::before {
+  margin-right: 10px;
+
+  content: "";
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background: url(./ask.svg) no-repeat center center/20px auto;
+}
+
+.id::before {
+  margin-right: 10px;
+
+  content: "";
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background: url(./key.svg) no-repeat center center/20px auto;
+}
+
+.flex-center {
+  display: flex;
+  align-items: center;
+}
+
+#test_results {
+  list-style-type: none;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}

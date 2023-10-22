@@ -45,7 +45,17 @@ function display(results) {
 
   results.tests.forEach((test) => {
     let div = document.createElement("li");
-    div.innerHTML = `<a href="./view.html?id=${test.id}">Title: ${test.title} Id:${test.id} Max Points:${test.maxPoints} Lenght:${test.questions.length}</a>`;
+    div.innerHTML = `
+        <a href=./view.html?id=${test.id} class="exam">
+    <div class="container">
+        <span class="title">${test.title}</span>
+
+        <div class="footer">
+            <span class="id flex-center">${test.id}</span>
+            <span class="questions flex-center">${test.questions.length}</span>
+            <span class="points flex-center">${test.maxPoints}</span>
+        </div>
+    </div>`;
     objects.push(div);
   });
 
