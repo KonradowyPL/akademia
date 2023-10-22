@@ -11,26 +11,21 @@
   <body>
     <div class="header">
       <h1>Odpowiedzi akademia el12</h1>
-    </div>
-    <div class="search">
       <form id="search">
-        <div class="input-container">
-          <input type="url" name="url" id="url" placeholder="Wersja" />
-          <input
-            type="text"
-            id="search_querry"
-            name="querry"
-            autocomplete="off"
-            placeholder="To jest wyszukiwarka LOL"
-          />
-        </div>
+        <input type="button" value=" " id="_url" />
 
-        <input type="submit" value="" id="search_submit" />
+        <input
+          type="text"
+          id="search_querry"
+          name="querry"
+          autocomplete="off"
+          placeholder="Szukaj..."
+          autofocus
+        />
+        <input type="submit" value=" " id="search_submit" />
       </form>
     </div>
 
-    <div id="results">
-      <ol id="test_results"></ol>
-    </div>
+    <ol id="test_results"></ol>
   </body>
 </html>

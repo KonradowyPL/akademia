@@ -2,7 +2,7 @@ var url = "";
 
 async function load() {
   const request = "https://konradowy.pythonanywhere.com?url=" + url;
-  if (localStorage.getItem("version") == url) {
+  if (localStorage.getItem("version") == url || url == "") {
     tests = JSON.parse(localStorage.getItem("tests"));
   } else {
     const response = await fetch(request);
@@ -33,9 +33,9 @@ function search(querry) {
   return results;
 }
 
-function searchMeanger(querry) {
-  url = document.getElementById("url").value;
-  load();
+async function searchMeanger(querry) {
+  console.log("submited!");
+  await load();
   results = search(querry);
   display(results);
 }
@@ -47,15 +47,15 @@ function display(results) {
     let div = document.createElement("li");
     div.innerHTML = `
         <a href=./view.html?id=${test.id} class="exam">
-    <div class="container">
-        <span class="title">${test.title}</span>
+            <span class="title">${test.title}</span>
 
-        <div class="footer">
-            <span class="id flex-center">${test.id}</span>
-            <span class="questions flex-center">${test.questions.length}</span>
-            <span class="points flex-center">${test.maxPoints}</span>
-        </div>
-    </div>`;
+            <div class="footer">
+              <span class="id icon">${test.id}</span>
+              <span class="questions icon">${test.questions.length}</span>
+              <span class="points icon">${test.maxPoints}</span>
+            </div>
+
+        </a>`;
     objects.push(div);
   });
 
@@ -75,4 +75,17 @@ document.getElementById("search").addEventListener("submit", function (event) {
   searchMeanger(querry);
 });
 
-document.getElementById("url").value = localStorage.getItem("version");
+document.getElementById("_url").onclick = async function () {
+  navigator.clipboard.readText().then((text) => {
+    url = text;
+    localStorage.setItem("tests", " ");
+  });
+};
+
+if (localStorage.getItem("tests") != null) {
+  temp = async function () {
+    await load();
+    searchMeanger("");
+  };
+  temp();
+}
