@@ -90,12 +90,12 @@ h1 {
 
 #_url {
   background: url(./input.svg) no-repeat center center/80% auto;
-  width: calc(min(5vw, 75px));
+  width: calc(min(5vw, 50px));
 }
 
 #search_submit {
   background: url(./search.svg) no-repeat center center/80% auto;
-  width: calc(min(5vw, 75px));
+  width: calc(min(5vw, 50px));
 }
 #search_querry {
   flex-grow: 1;
@@ -120,5 +120,5 @@ input {
   padding-left: 5%;
   padding-right: 5%;
   padding-bottom: 20px;
-  height: calc(min(5vw, 75px));
+  height: calc(min(5vw, 50px));
 }
