@@ -81,9 +81,78 @@ a {
   align-items: center;
 }
 
+#results {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 #test_results {
   list-style-type: none;
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+h1 {
+  text-align: center;
+  color: var(--secondary-text);
+}
+
+.search {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  flex-wrap: wrap;
+}
+
+#search_submit {
+  width: calc(min(10vw, 75px));
+  aspect-ratio: 1 !important;
+  background: url(./search.svg) no-repeat center center/75% auto;
+  border-left: 1px solid var(--primary);
+  cursor: pointer;
+}
+
+form {
+  background-color: var(--item-background);
+  height: calc(min(10vw, 75px));
+  width: 85%;
+  display: flex;
+  max-height: 10vw;
+}
+
+.input-container {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.input-container > * {
+  flex-grow: 1;
+}
+
+li {
+  display: block;
+  box-sizing: border-box;
+}
+
+ol {
+  box-sizing: border-box;
+}
+
+form {
+  border: 1px solid var(--text);
+}
+
+input {
+  border: 0;
+  background-color: var(--item-background);
+}
+input#url {
+  border-bottom: 1px solid var(--primary);
+}
+body {
+  width: calc(100vw - 16px);
 }
