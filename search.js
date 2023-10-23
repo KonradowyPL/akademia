@@ -1,7 +1,8 @@
 function serachTests(querry) {
+  num = Number(querry);
   let results = [];
   tests.forEach((test) => {
-    if (test.title.toLowerCase().includes(querry)) {
+    if (test.title.toLowerCase().includes(querry) || num == test.id) {
       results.push(test);
     }
   });
