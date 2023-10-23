@@ -12,6 +12,4 @@ body {
   font-weight: 400;
   line-height: 1.4;
   color: var(--text);
-  scrollbar-gutter: stable;
-  overflow-x: hidden;
 }

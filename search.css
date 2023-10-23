@@ -67,7 +67,7 @@
 /* global stylising */
 
 body {
-  width: calc(100vw - 16px);
+  overflow-y: scroll;
 }
 
 a {
@@ -86,16 +86,29 @@ a {
 h1 {
   text-align: center;
   color: var(--secondary-text);
+  font-size: calc(min(6vw, 50px));
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-#_url {
-  background: url(./input.svg) no-repeat center center/80% auto;
-  width: calc(min(5vw, 50px));
+h1::before,
+h1::after {
+  content: "";
+  display: block;
+  flex-grow: 1;
+  height: 2px;
+  background-color: var(--secondary-text);
+  margin-left: 2%;
+  margin-right: 2%;
 }
 
 #search_submit {
   background: url(./search.svg) no-repeat center center/80% auto;
-  width: calc(min(5vw, 50px));
+  width: calc(min(6vw, 50px));
+  height: calc(min(6vw, 50px));
+
+  cursor: pointer;
 }
 #search_querry {
   flex-grow: 1;
@@ -120,5 +133,5 @@ input {
   padding-left: 5%;
   padding-right: 5%;
   padding-bottom: 20px;
-  height: calc(min(5vw, 50px));
+  height: calc(min(6vw, 50px));
 }

@@ -1,19 +1,3 @@
-var url = "";
-
-async function load() {
-  const request = "https://konradowy.pythonanywhere.com?url=" + url;
-  if (localStorage.getItem("version") == url || url == "") {
-    tests = JSON.parse(localStorage.getItem("tests"));
-  } else {
-    const response = await fetch(request);
-    const value = await response.text();
-    tests = JSON.parse(value);
-    localStorage.setItem("version", url);
-    localStorage.setItem("tests", value);
-  }
-  return tests;
-}
-
 function serachTests(querry) {
   let results = [];
   tests.forEach((test) => {
@@ -34,8 +18,6 @@ function search(querry) {
 }
 
 async function searchMeanger(querry) {
-  console.log("submited!");
-  await load();
   results = search(querry);
   display(results);
 }
@@ -75,17 +57,5 @@ document.getElementById("search").addEventListener("submit", function (event) {
   searchMeanger(querry);
 });
 
-document.getElementById("_url").onclick = async function () {
-  navigator.clipboard.readText().then((text) => {
-    url = text;
-    localStorage.setItem("tests", " ");
-  });
-};
-
-if (localStorage.getItem("tests") != null) {
-  temp = async function () {
-    await load();
-    searchMeanger("");
-  };
-  temp();
-}
+searchMeanger("");
+localStorage.setItem("tests", JSON.stringify(tests));
