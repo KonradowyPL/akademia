@@ -25,7 +25,7 @@ test.questions.forEach((question) => {
   for (let i = 0; i < question.anwsers.length; i++) {
     const anwser = question.anwsers[i];
     if (anwser == correct) {
-      list += `<li><b>${anwser}</b></li>`;
+      list += `<li class="correct">${anwser}</li>`;
     } else {
       list += `<li>${anwser}</li>`;
     }
