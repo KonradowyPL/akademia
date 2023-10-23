@@ -50,11 +50,13 @@
 .exam .title {
   font-size: 20.125px;
   position: relative;
+  max-height: 1px;
 }
-
 .exam {
-  width: 278px;
-  height: 111px;
+  aspect-ratio: 2.5;
+  overflow: hidden;
+
+  width: 250px;
   background-color: var(--item-background);
   padding: 20px 25px 20px 60px;
   margin: 20px;
@@ -68,6 +70,8 @@
 
 body {
   overflow-y: scroll;
+  overflow-x: hidden;
+  width: calc(100vw - 16px);
 }
 
 a {
