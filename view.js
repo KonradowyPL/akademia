@@ -19,7 +19,7 @@ const test = findtest(id);
 
 let objects = [];
 
-test.questions.forEach((question) => {
+test.questions.forEach((question, index) => {
   list = ``;
   const correct = question.correct;
   for (let i = 0; i < question.anwsers.length; i++) {
@@ -33,6 +33,7 @@ test.questions.forEach((question) => {
   let element = `${question.question}<ol> ${list}</ol>`;
   let div = document.createElement("li");
   div.innerHTML = element;
+  div.id = `q${index}`;
   objects.push(div);
 });
 

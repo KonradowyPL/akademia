@@ -58,5 +58,11 @@ document.getElementById("search").addEventListener("submit", function (event) {
   searchMeanger(querry);
 });
 
+// remove data if user logged in previous versions
+if (localStorage.getItem("userId") != null) {
+  localStorage.clear();
+}
+
+tests = JSON.parse(localStorage.getItem("tests"));
+
 searchMeanger("");
-localStorage.setItem("tests", JSON.stringify(tests));

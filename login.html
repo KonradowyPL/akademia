@@ -1,0 +1,50 @@
+<span id="message">Waiting for server...</span>
+<div id="container"></div>
+<script>
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
+  const userId = urlParams.get("userId");
+  if (userId != null) {
+    console.log(userId);
+
+    var isOk = true;
+
+    fetch(`https://konradowy.pythonanywhere.com?userId=${userId}`)
+      .then((response) => {
+        text = response.text();
+        if (!response.ok) {
+          isOk = false;
+        }
+        return text;
+      })
+
+      .then((data) => {
+        if (!isOk) {
+          document.getElementById("message").innerHTML = data;
+        } else {
+          document.getElementById("message").innerHTML = "Loging in...";
+          const script = document.createElement("script");
+          script.src = data;
+          document.getElementById("container").appendChild(script);
+
+          let checkExist = setInterval(function () {
+            if (typeof tests !== "undefined") {
+              localStorage.setItem("tests", JSON.stringify(tests));
+              localStorage.setItem("version", data);
+              localStorage.setItem("userId", userId);
+
+              document.getElementById("message").innerHTML =
+                "Logged in succesfully";
+
+              window.location.href = "./search.html";
+
+              clearInterval(checkExist);
+            }
+          }, 100);
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  }
+</script>
