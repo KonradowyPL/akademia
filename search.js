@@ -59,7 +59,7 @@ document.getElementById("search").addEventListener("submit", function (event) {
 });
 
 // remove data if user logged in previous versions
-if (localStorage.getItem("userId") = null) {
+if (localStorage.getItem("userId") == null) {
   localStorage.clear();
 }
 
