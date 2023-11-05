@@ -70,7 +70,6 @@
 body {
   overflow-y: scroll;
   overflow-x: hidden;
-  width: calc(100vw - 16px);
 }
 
 a {
@@ -124,7 +123,7 @@ h1::after {
 }
 
 input {
-  background-color: #fff;
+  background-color: var(--secondary-item-background);
   border: 1px solid var(--secondary);
   margin-left: 2%;
   margin-right: 2%;

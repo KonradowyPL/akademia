@@ -1,13 +1,26 @@
-:root {
+body {
   --primary: #007be0;
-  --secondary: #d9d9d9;
-  --text: #333;
-  --secondary-text: #9e9fa0;
-  --item-background: #fafafa;
+  --secondary: #444;
+  --text: #d0d0d0;
+  --secondary-text: #d0d0d0;
+  --item-background: #1a1a1a;
+  --secondary-item-background: #111;
+  background-color: #171717;
+}
+
+@media (prefers-color-scheme: light) {
+  body {
+    --primary: #007be0;
+    --secondary: #d9d9d9;
+    --text: #333;
+    --secondary-text: #9e9fa0;
+    --item-background: #fafafa;
+    --secondary-item-background: #fff;
+    background-color: #fff;
+  }
 }
 
 body {
-  background-color: #fff;
   font-family: "Inter", sans-serif;
   font-weight: 400;
   line-height: 1.4;
