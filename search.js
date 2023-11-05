@@ -1,5 +1,13 @@
+function getNumberFromEnd(str) {
+  const matches = str.match(/\d+$/);
+  if (matches) {
+    return parseInt(matches[0], 10);
+  }
+  return null;
+}
+
 function serachTests(querry) {
-  num = Number(querry);
+  num = getNumberFromEnd(querry);
   let results = [];
   tests.forEach((test) => {
     if (test.title.toLowerCase().includes(querry) || num == test.id) {

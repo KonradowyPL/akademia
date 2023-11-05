@@ -56,10 +56,9 @@
   aspect-ratio: 2.5;
   overflow: hidden;
 
-  width: 250px;
+  width: 300px;
   background-color: var(--item-background);
   padding: 20px 25px 20px 60px;
-  margin: 20px;
 
   display: flex;
   flex-direction: column;
@@ -85,6 +84,7 @@ a {
   flex-wrap: wrap;
   justify-content: center;
   padding: 0;
+  gap: 20px;
 }
 
 h1 {
@@ -124,7 +124,7 @@ h1::after {
 }
 
 input {
-  background-color: #fff !important;
+  background-color: #fff;
   border: 1px solid var(--secondary);
   margin-left: 2%;
   margin-right: 2%;
