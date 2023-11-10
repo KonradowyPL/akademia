@@ -23,7 +23,7 @@ test.questions.forEach((question, index) => {
   const correct = question.correct;
   for (let i = 0; i < question.anwsers.length; i++) {
     const anwser = question.anwsers[i];
-    list += `<li class="${anwser == correct ? "correct" : ""}" >${anwser}</li>`;
+    list += `<li ${anwser == correct ? "class='correct'" : ""} >${anwser}</li>`;
   }
   let element = `${question.question}<ul> ${list}</ul>`;
   let div = document.createElement("li");

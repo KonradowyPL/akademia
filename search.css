@@ -141,3 +141,7 @@ input {
   padding-bottom: 20px;
   height: calc(min(6vw, 50px));
 }
+
+#test_results:empty::before {
+  content: "Brak Wyników";
+}

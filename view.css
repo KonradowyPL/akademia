@@ -83,3 +83,7 @@ h2 {
 #questions {
   padding-left: 0px;
 }
+
+html {
+  scroll-behavior: smooth;
+}

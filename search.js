@@ -6,7 +6,9 @@ function getNumberFromEnd(str) {
   return null;
 }
 
-function serachTests(querry) {
+function search(querry) {
+  querry = querry.toLowerCase();
+
   num = getNumberFromEnd(querry);
   let results = [];
   tests.forEach((test) => {
@@ -14,15 +16,6 @@ function serachTests(querry) {
       results.push(test);
     }
   });
-
-  return results;
-}
-
-function search(querry) {
-  querry = querry.toLowerCase();
-  results = {
-    tests: serachTests(querry),
-  };
   return results;
 }
 
@@ -34,7 +27,7 @@ async function searchMeanger(querry) {
 function display(results) {
   let objects = [];
 
-  results.tests.forEach((test) => {
+  results.forEach((test) => {
     let div = document.createElement("li");
     div.innerHTML = `
         <a href=./view.html?id=${test.id} class="exam">
@@ -50,25 +43,24 @@ function display(results) {
     objects.push(div);
   });
 
-  if (objects.length == 0) {
-    let noResult = document.createElement("span");
-    noResult.innerHTML = "Brak Wyników";
-    objects.push(noResult);
-  }
   document.getElementById("test_results").replaceChildren(...objects);
 }
 
-document.getElementById("search").addEventListener("submit", function (event) {
+onsubmit = function (event) {
   event.preventDefault();
-
   querry = document.getElementById("search_querry").value;
-  document.title = `"${querry}" - Odpowiedzi akademia el12`;
+  document.title = `Odpowiedzi akademia el12`;
   searchMeanger(querry);
-});
+};
 
-// remove data if user logged in previous versions
-if (localStorage.getItem("userId") == null) {
-  localStorage.clear();
+document.getElementById("search").addEventListener("submit", onsubmit);
+
+document.getElementById("search_querry").addEventListener("input", onsubmit);
+
+if (localStorage.getItem("version") != "1.3") {
+  window.location.href = `./login.html?userId=${
+    localStorage.getItem("userId") || ""
+  }`;
 }
 
 tests = JSON.parse(localStorage.getItem("tests"));

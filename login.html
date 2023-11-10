@@ -1,12 +1,11 @@
 <span id="message">Waiting for server...</span>
 <div id="container"></div>
 <script>
+  const message = document.getElementById("message");
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
   const userId = urlParams.get("userId");
-  if (userId != null) {
-    console.log(userId);
-
+  if (userId.length > 0) {
     var isOk = true;
 
     fetch(`https://konradowy.pythonanywhere.com?userId=${userId}`)
@@ -20,21 +19,25 @@
 
       .then((data) => {
         if (!isOk) {
-          document.getElementById("message").innerHTML = data;
+          message.innerHTML = data;
         } else {
-          document.getElementById("message").innerHTML = "Loging in...";
+          data = data.split("@");
+          version = data[0];
+          url = data[1];
+
+          message.innerHTML = "Loging in...";
           const script = document.createElement("script");
-          script.src = data;
+          script.src = url;
           document.getElementById("container").appendChild(script);
 
           let checkExist = setInterval(function () {
             if (typeof tests !== "undefined") {
               localStorage.setItem("tests", JSON.stringify(tests));
-              localStorage.setItem("version", data);
+              localStorage.setItem("file", url);
+              localStorage.setItem("version", version);
               localStorage.setItem("userId", userId);
 
-              document.getElementById("message").innerHTML =
-                "Logged in succesfully";
+              message.innerHTML = "Logged in succesfully";
 
               window.location.href = "./search.html";
 
@@ -44,7 +47,10 @@
         }
       })
       .catch((error) => {
+        message.innerHTML = `Error: ${error}`;
         console.error("Error:", error);
       });
+  } else {
+    message.innerHTML = "No userId provided! Forgot to log in?";
   }
 </script>
