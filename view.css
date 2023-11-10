@@ -1,3 +1,85 @@
+h1,
+h4 {
+  margin: 0;
+  text-align: center;
+  text-wrap: balance;
+}
+
+#maxPoints::before {
+  background: url(./trophy.svg) no-repeat center center/20px auto;
+}
+
+#lenght::before {
+  background: url(./ask.svg) no-repeat center center/20px auto;
+}
+
+#_id::before {
+  background: url(./key.svg) no-repeat center center/20px auto;
+}
+
+.newtab::after {
+  background: url(./link.svg) no-repeat center center/20px auto;
+}
+
+.icons {
+  display: flex;
+}
+
+.icons > *,
+.icon-after {
+  display: flex;
+}
+
+.icon-after {
+  margin-left: 15px;
+  width: max-content;
+}
+
+.icons > *::before,
+.icon-after::after {
+  margin-left: 15px;
+  margin-right: 5px;
+  display: block;
+  content: "";
+  width: 20px;
+  height: 20px;
+}
+
+a {
+  cursor: pointer;
+  color: var(--text);
+  text-decoration: underline;
+}
+
+a::after {
+  margin-left: 5px !important;
+}
+
+ul > li {
+  list-style-type: disc;
+  margin-bottom: 5px;
+}
+
+.header {
+  background-color: var(--item-background);
+  padding-bottom: 15px;
+}
+
 .correct {
-  color: #0d0;
+  color: var(--correct);
+}
+
+h2 {
+  font-weight: 100;
+}
+
+.question {
+  background-color: var(--item-background);
+  list-style-type: none;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
+#questions {
+  padding-left: 0px;
 }

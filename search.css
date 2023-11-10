@@ -48,6 +48,8 @@
 }
 
 .exam .title {
+  text-wrap: balance;
+
   font-size: 20.125px;
   position: relative;
   max-height: 1px;
@@ -127,6 +129,7 @@ input {
   border: 1px solid var(--secondary);
   margin-left: 2%;
   margin-right: 2%;
+  color: var(--text);
 }
 
 #search {

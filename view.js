@@ -2,7 +2,6 @@ function findtest(id) {
   for (let i = 0; i < tests.length; i++) {
     const test = tests[i];
     if (test.id == id) {
-      console.log(test);
       return test;
     }
   }
@@ -24,26 +23,34 @@ test.questions.forEach((question, index) => {
   const correct = question.correct;
   for (let i = 0; i < question.anwsers.length; i++) {
     const anwser = question.anwsers[i];
-    if (anwser == correct) {
-      list += `<li class="correct">${anwser}</li>`;
-    } else {
-      list += `<li>${anwser}</li>`;
-    }
+    list += `<li class="${anwser == correct ? "correct" : ""}" >${anwser}</li>`;
   }
-  let element = `${question.question}<ol> ${list}</ol>`;
+  let element = `${question.question}<ul> ${list}</ul>`;
   let div = document.createElement("li");
+  div.className = "question";
   div.innerHTML = element;
   div.id = `q${index}`;
   objects.push(div);
 });
 
-document.getElementById("title").innerHTML = `${test.title}`;
+document.getElementById("title").innerHTML = test.title;
+document.getElementById("lenght").innerHTML = test.questions.length;
+document.getElementById("maxPoints").innerHTML = test.maxPoints;
+document.getElementById("_id").innerHTML = test.id;
+
 document.getElementById(
-  "lenght"
-).innerHTML = `Ilość pytań:${test.questions.length}`;
-document.getElementById(
-  "maxPoints"
-).innerHTML = `Maskymalna ilość punktów:${test.maxPoints}`;
-document.getElementById("_id").innerHTML = `Id: ${test.id}`;
+  "results"
+).href = `https://akademia.el12.pl/testy/wyniki-testu/${test.id}`;
+
 document.getElementById("questions").replaceChildren(...objects);
 document.title = `${test.title} - Odpowiedzi do testu`;
+
+document.getElementById("solve").onclick = function (e) {
+  if (confirm(`Czy napewno chcesz rozwiązać test "${test.title}"?`)) {
+    var win = window.open(
+      `https://akademia.el12.pl/testy/rozwiazywanie-testu/${test.id}`,
+      "_blank"
+    );
+    win.focus();
+  }
+};
