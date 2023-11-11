@@ -142,6 +142,10 @@ input {
   height: calc(min(6vw, 50px));
 }
 
-#test_results:empty::before {
+#test_results:empty::after {
   content: "Brak Wyników";
+}
+
+.highlight {
+  color: var(--secondary-text);
 }

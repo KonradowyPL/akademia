@@ -5,6 +5,7 @@ function findtest(id) {
       return test;
     }
   }
+  return { title: "", id: id, questions: [], maxPoints: 0 };
 }
 
 const urlParams = Object.fromEntries(
@@ -15,6 +16,7 @@ const id = Number(urlParams.id);
 
 const tests = JSON.parse(localStorage.getItem("tests"));
 const test = findtest(id);
+console.log(test);
 
 let objects = [];
 

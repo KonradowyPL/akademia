@@ -1,3 +1,5 @@
+// gets number from end of string
+// if no number is found returns null
 function getNumberFromEnd(str) {
   const matches = str.match(/\d+$/);
   if (matches) {
@@ -6,32 +8,50 @@ function getNumberFromEnd(str) {
   return null;
 }
 
+// searches tests by querry and given id
 function search(querry) {
   querry = querry.toLowerCase();
 
-  num = getNumberFromEnd(querry);
+  let num = getNumberFromEnd(querry);
   let results = [];
   tests.forEach((test) => {
-    if (test.title.toLowerCase().includes(querry) || num == test.id) {
+    if (
+      test.title.toLowerCase().includes(querry) ||
+      // id string has to start with querry
+      String(test.id).startsWith(num)
+    ) {
       results.push(test);
     }
   });
   return results;
 }
 
-async function searchMeanger(querry) {
-  results = search(querry);
-  display(results);
+function searchMeanger(querry) {
+  let results = search(querry);
+  display(results, querry);
 }
 
-function display(results) {
+// escapes regEx characters
+function escapeRegEx(string) {
+  // $& means the whole matched string
+  return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+// displays results
+function display(results, querry) {
   let objects = [];
 
   results.forEach((test) => {
     let div = document.createElement("li");
+
+    // highlights querry in title
+    // is not case sensitive
+    let regex = new RegExp(`(${escapeRegEx(querry)})`, "gi");
+    title = test.title.replace(regex, '<span class="highlight">$1</span>');
+
     div.innerHTML = `
         <a href=./view.html?id=${test.id} class="exam">
-            <span class="title">${test.title}</span>
+            <span class="title">${title}</span>
 
             <div class="footer">
               <span class="id icon">${test.id}</span>
@@ -46,17 +66,17 @@ function display(results) {
   document.getElementById("test_results").replaceChildren(...objects);
 }
 
+// search
 onsubmit = function (event) {
   event.preventDefault();
-  querry = document.getElementById("search_querry").value;
-  document.title = `Odpowiedzi akademia el12`;
+  querry = document.getElementById("search_querry").value.toLowerCase();
   searchMeanger(querry);
 };
 
 document.getElementById("search").addEventListener("submit", onsubmit);
-
 document.getElementById("search_querry").addEventListener("input", onsubmit);
 
+// relog users that have used older versions of app
 if (localStorage.getItem("version") != "1.3") {
   window.location.href = `./login.html?userId=${
     localStorage.getItem("userId") || ""
