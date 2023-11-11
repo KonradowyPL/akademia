@@ -13,6 +13,7 @@ const urlParams = Object.fromEntries(
 );
 
 const id = Number(urlParams.id);
+const from = urlParams.from;
 
 const tests = JSON.parse(localStorage.getItem("tests"));
 const test = findtest(id);
@@ -56,3 +57,7 @@ document.getElementById("solve").onclick = function (e) {
     win.focus();
   }
 };
+
+Array.from(document.querySelectorAll("[return]")).forEach((e) => {
+  e.href = `./search.html?querry=${from || ""}`;
+});

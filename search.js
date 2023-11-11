@@ -27,7 +27,7 @@ function search(querry) {
 }
 
 function searchMeanger(querry) {
-  let results = search(querry);
+  const results = search(querry);
   display(results, querry);
 }
 
@@ -50,7 +50,7 @@ function display(results, querry) {
     title = test.title.replace(regex, '<span class="highlight">$1</span>');
 
     div.innerHTML = `
-        <a href=./view.html?id=${test.id} class="exam">
+        <a href=./view.html?id=${test.id}&from=${querry} class="exam">
             <span class="title">${title}</span>
 
             <div class="footer">
@@ -73,7 +73,7 @@ onsubmit = function (event) {
   searchMeanger(querry);
 };
 
-document.getElementById("search").addEventListener("submit", onsubmit);
+// document.getElementById("search").addEventListener("submit", onsubmit);
 document.getElementById("search_querry").addEventListener("input", onsubmit);
 
 // relog users that have used older versions of app
@@ -85,4 +85,11 @@ if (localStorage.getItem("version") != "1.3") {
 
 tests = JSON.parse(localStorage.getItem("tests"));
 
-searchMeanger("");
+const urlParams = Object.fromEntries(
+  new URLSearchParams(new URL(document.URL).search)
+);
+
+let querry = urlParams.querry || "";
+
+searchMeanger(querry);
+document.getElementById("search_querry").value = querry;
