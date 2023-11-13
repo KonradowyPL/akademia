@@ -17,7 +17,6 @@ const from = urlParams.from;
 
 const tests = JSON.parse(localStorage.getItem("tests"));
 const test = findtest(id);
-console.log(test);
 
 let objects = [];
 
@@ -48,7 +47,7 @@ document.getElementById(
 document.getElementById("questions").replaceChildren(...objects);
 document.title = `${test.title} - Odpowiedzi do testu`;
 
-document.getElementById("solve").onclick = function (e) {
+solve = function (e) {
   if (confirm(`Czy napewno chcesz rozwiązać test "${test.title}"?`)) {
     var win = window.open(
       `https://akademia.el12.pl/testy/rozwiazywanie-testu/${test.id}`,
@@ -57,7 +56,3 @@ document.getElementById("solve").onclick = function (e) {
     win.focus();
   }
 };
-
-Array.from(document.querySelectorAll("[return]")).forEach((e) => {
-  e.href = `./search.html?querry=${from || ""}`;
-});

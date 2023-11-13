@@ -50,7 +50,7 @@ function display(results, querry) {
     title = test.title.replace(regex, '<span class="highlight">$1</span>');
 
     div.innerHTML = `
-        <a href=./view.html?id=${test.id}&from=${querry} class="exam">
+        <a href=./view.html?id=${test.id} class="exam">
             <span class="title">${title}</span>
 
             <div class="footer">
@@ -67,13 +67,13 @@ function display(results, querry) {
 }
 
 // search
-onsubmit = function (event) {
+onsubmit = async function (event) {
   event.preventDefault();
   querry = document.getElementById("search_querry").value.toLowerCase();
+  history.replaceState({ querry }, null, null);
   searchMeanger(querry);
 };
 
-// document.getElementById("search").addEventListener("submit", onsubmit);
 document.getElementById("search_querry").addEventListener("input", onsubmit);
 
 // relog users that have used older versions of app
@@ -89,7 +89,6 @@ const urlParams = Object.fromEntries(
   new URLSearchParams(new URL(document.URL).search)
 );
 
-let querry = urlParams.querry || "";
+let querry = history.state?.querry || urlParams.querry || "";
 
 searchMeanger(querry);
-document.getElementById("search_querry").value = querry;
