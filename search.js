@@ -78,16 +78,12 @@ document.getElementById("search_querry").addEventListener("input", onsubmit);
 
 // relog users that have used older versions of app
 if (localStorage.getItem("version") != "1.3") {
-  window.location.href = `./login.html?userId=${
-    localStorage.getItem("userId") || ""
-  }`;
+  window.location.href = `./login.html?userId=${localStorage.getItem("userId") || ""}`;
 }
 
 tests = JSON.parse(localStorage.getItem("tests"));
 
-const urlParams = Object.fromEntries(
-  new URLSearchParams(new URL(document.URL).search)
-);
+const urlParams = Object.fromEntries(new URLSearchParams(new URL(document.URL).search));
 
 let querry = history.state?.querry || urlParams.querry || "";
 

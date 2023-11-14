@@ -8,9 +8,7 @@ function findtest(id) {
   return { title: "", id: id, questions: [], maxPoints: 0 };
 }
 
-const urlParams = Object.fromEntries(
-  new URLSearchParams(new URL(document.URL).search)
-);
+const urlParams = Object.fromEntries(new URLSearchParams(new URL(document.URL).search));
 
 const id = Number(urlParams.id);
 const from = urlParams.from;
@@ -40,19 +38,14 @@ document.getElementById("lenght").innerHTML = test.questions.length;
 document.getElementById("maxPoints").innerHTML = test.maxPoints;
 document.getElementById("_id").innerHTML = test.id;
 
-document.getElementById(
-  "results"
-).href = `https://akademia.el12.pl/testy/wyniki-testu/${test.id}`;
+document.getElementById("results").href = `https://akademia.el12.pl/testy/wyniki-testu/${test.id}`;
 
 document.getElementById("questions").replaceChildren(...objects);
 document.title = `${test.title} - Odpowiedzi do testu`;
 
 solve = function (e) {
   if (confirm(`Czy napewno chcesz rozwiązać test "${test.title}"?`)) {
-    var win = window.open(
-      `https://akademia.el12.pl/testy/rozwiazywanie-testu/${test.id}`,
-      "_blank"
-    );
+    var win = window.open(`https://akademia.el12.pl/testy/rozwiazywanie-testu/${test.id}`, "_blank");
     win.focus();
   }
 };
