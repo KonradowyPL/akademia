@@ -149,3 +149,8 @@ input {
 .highlight {
   color: var(--secondary-text);
 }
+
+li {
+  width: 385px;
+  height: 160px;
+}
