@@ -5,8 +5,11 @@ body {
   --secondary-text: #707070;
   --item-background: #1a1a1a;
   --secondary-item-background: #111;
-  background-color: #171717;
-  --correct: #287247;
+  --background-color: #171717;
+}
+
+html {
+  scrollbar-color: #d0d0d0 #171717;
 }
 
 @media (prefers-color-scheme: light) {
@@ -17,8 +20,11 @@ body {
     --secondary-text: #9e9fa0;
     --item-background: #fafafa;
     --secondary-item-background: #fff;
-    --correct: #38c172;
-    background-color: #fff;
+    --background-color: #fff;
+  }
+
+  html {
+    scrollbar-color: #9e9fa0 #fff;
   }
 }
 
@@ -28,4 +34,15 @@ body {
   line-height: 1.4;
   color: var(--text);
   text-wrap: balance;
+  background-color: var(--background-color);
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--secondary);
+  border-radius: 10px;
 }
