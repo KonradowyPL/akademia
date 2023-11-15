@@ -50,7 +50,7 @@ function display(results, querry) {
     title = test.title.replace(regex, '<span class="highlight">$1</span>');
 
     div.innerHTML = `
-        <a href=./view.html?id=${test.id} class="exam">
+        <a href=./view.html?id=${test.id} class="exam hover">
             <span class="title">${title}</span>
 
             <div class="footer">

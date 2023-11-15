@@ -27,7 +27,7 @@ test.questions.forEach((question, index) => {
   }
   let element = `${question.question}<ul> ${list}</ul>`;
   let div = document.createElement("li");
-  div.className = "question";
+  div.className = "question hover";
   div.innerHTML = element;
   div.id = `q${index}`;
   objects.push(div);

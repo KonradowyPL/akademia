@@ -6,6 +6,7 @@ body {
   --item-background: #1a1a1a;
   --secondary-item-background: #111;
   --background-color: #171717;
+  --theme: -1;
 }
 
 html {
@@ -21,6 +22,7 @@ html {
     --item-background: #fafafa;
     --secondary-item-background: #fff;
     --background-color: #fff;
+    --theme: 1;
   }
 
   html {
@@ -45,4 +47,18 @@ body {
 ::-webkit-scrollbar-thumb {
   background: var(--secondary);
   border-radius: 10px;
+}
+
+.hover {
+  transition: 150ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hover {
+    transition: 0ms;
+  }
+}
+
+.hover:hover {
+  filter: brightness(calc(1 - var(--theme) * 0.3));
 }
