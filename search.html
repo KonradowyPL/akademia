@@ -10,16 +10,28 @@
     <link rel="stylesheet" href="search.css" />
     <title>Odpowiedzi akademia el12</title>
   </head>
+
   <body>
     <div class="header">
       <h1>Odpowiedzi akademia el12</h1>
       <div class="user">
-        <span class="icon nameicon"></span>Logged as:</span>
-        <span id="name" ></span>
+        <span class="icon nameicon">Logged as:</span>
+        <span id="name"></span>
         <a href="javascript:logout()">Logout</a>
       </div>
       <div class="container">
         <input type="text" id="search_querry" name="querry" autocomplete="off" placeholder="Szukaj..." autofocus />
+      </div>
+      <div id="sort">
+        <input type="radio" id="srotAz" name="sort" value="srotAz" checked /><label for="srotAz" class="icon alphabet"></label>
+        <input type="radio" id="sortPoints" name="sort" value="sortPoints" />
+        <label for="sortPoints" class="icon points"></label>
+        <input type="radio" id="sortId" name="sort" value="sortId" /><label for="sortPoints" class="icon id"></label>
+        <input type="radio" id="sortQuestions" name="sort" value="sortQuestions" />
+        <label for="sortQuestions" class="icon questions"></label>
+
+        <input type="checkbox" id="sortReverse" />
+        <label for="sortReverse"></label>
       </div>
     </div>
     <ol id="test_results">

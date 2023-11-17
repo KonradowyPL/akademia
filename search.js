@@ -1,4 +1,4 @@
-// gets nr from end of string
+// gets nrumber from end of string
 // if no number is found returns null
 function getNumberFromEnd(str) {
   const matches = str.match(/\d+$/);
@@ -6,6 +6,31 @@ function getNumberFromEnd(str) {
     return parseInt(matches[0], 10);
   }
   return null;
+}
+
+function sort() {
+  key = document.querySelector('input[name="sort"]:checked').value;
+  reverse = document.getElementById("sortReverse").checked ? 1 : -1;
+  localStorage.setItem("sortKey", key);
+  localStorage.setItem("sortReverse", reverse);
+
+  console.log(reverse);
+
+  keys = {
+    srotAz: (test) => test.title,
+    sortPoints: (test) => test.maxPoints,
+    sortId: (test) => test.id,
+    sortQuestions: (test) => test.questions.length,
+  };
+
+  thisKey = keys[key];
+
+  tests.sort((e1, e2) => {
+    const a = thisKey(e1);
+    const b = thisKey(e2);
+
+    return a == b ? 0 : a > b ? reverse : -reverse;
+  });
 }
 
 // searches tests by querry and given id
@@ -76,7 +101,6 @@ logout = function () {
 
 // search
 onsubmit = async function (event) {
-  event.preventDefault();
   querry = document.getElementById("search_querry").value.toLowerCase();
   history.replaceState({ querry }, null, null);
   searchMeanger(querry);
@@ -90,6 +114,26 @@ if (localStorage.getItem("version") != "2.1") {
 }
 
 tests = JSON.parse(localStorage.getItem("tests"));
+
+key = localStorage.getItem("sortKey");
+document.querySelectorAll('input[type="radio"][name="sort"]').forEach((radio) => {
+  if (radio.value == key) {
+    radio.checked = true;
+  }
+  radio.addEventListener("change", function () {
+    sort();
+    onsubmit();
+  });
+});
+document.getElementById("sortReverse").addEventListener("change", function () {
+  sort();
+  onsubmit();
+});
+if (localStorage.getItem("sortReverse") == 1) {
+  document.getElementById("sortReverse").checked = true;
+}
+
+sort();
 
 const urlParams = Object.fromEntries(new URLSearchParams(new URL(document.URL).search));
 

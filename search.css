@@ -9,6 +9,10 @@
   justify-content: space-between;
 }
 
+.alphabet::before {
+  background: url(./alphabet.svg) no-repeat center center/20px auto;
+}
+
 .points::before {
   background: url(./trophy.svg) no-repeat center center/20px auto;
 }
@@ -167,4 +171,28 @@ input {
 
 .user > a {
   text-decoration: underline;
+}
+
+#sort {
+  display: flex;
+  justify-content: center;
+}
+
+input[type="radio"] {
+  margin: 5px;
+}
+
+#sortReverse {
+  display: none;
+}
+
+#sortReverse + label {
+  display: inline-block;
+  width: 40px; /* adjust as needed */
+  height: 40px; /* adjust as needed */
+  background: url(./sort.svg) no-repeat center center/80% auto;
+}
+
+#sortReverse:checked + label {
+  transform: scaleY(-1);
 }
