@@ -13,15 +13,13 @@
   <body>
     <div class="header">
       <h1>Odpowiedzi akademia el12</h1>
+      <div class="user">
+        <span class="icon nameicon"></span>Logged as:</span>
+        <span id="name" ></span>
+        <a href="javascript:logout()">Logout</a>
+      </div>
       <div class="container">
-        <input
-          type="text"
-          id="search_querry"
-          name="querry"
-          autocomplete="off"
-          placeholder="Szukaj..."
-          autofocus
-        />
+        <input type="text" id="search_querry" name="querry" autocomplete="off" placeholder="Szukaj..." autofocus />
       </div>
     </div>
     <ol id="test_results">

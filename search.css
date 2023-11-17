@@ -152,7 +152,19 @@ input {
   color: var(--secondary-text);
 }
 
-li {
-  width: 385px;
-  height: 160px;
+.nameicon::before {
+  background: url(./user.svg) no-repeat center center/80% auto;
+  width: 40px;
+  height: 40px;
+}
+
+.user {
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.user > a {
+  text-decoration: underline;
 }

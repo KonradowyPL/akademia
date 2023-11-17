@@ -1,56 +1,84 @@
-<span id="message">Waiting for server...</span>
+<span id="message"></span>
 <div id="container"></div>
 <script>
+  function addMessage(val) {
+    const ele = document.createElement("span");
+    ele.innerHTML = val + "<br>";
+    message.appendChild(ele);
+  }
+
+  function getToken() {
+    var token = urlParams.get("userId");
+    if ((token || "").length == 0) {
+      token = prompt("Input your token here. If you do not have it ask owner to make one for you.");
+    }
+
+    if ((token || "").length != 32) {
+      addMessage("Entered wrong token is in wrong format!");
+      return null;
+    }
+    return token;
+  }
+
   const message = document.getElementById("message");
-  const queryString = window.location.search;
-  const urlParams = new URLSearchParams(queryString);
-  const userId = urlParams.get("userId");
-  if (userId.length > 0) {
-    var isOk = true;
+  const urlParams = new URLSearchParams(window.location.search);
+  const from = urlParams.get("from");
 
-    fetch(`https://konradowy.pythonanywhere.com?userId=${userId}`)
-      .then((response) => {
-        text = response.text();
-        if (!response.ok) {
-          isOk = false;
-        }
-        return text;
-      })
-
-      .then((data) => {
-        if (!isOk) {
-          message.innerHTML = data;
-        } else {
-          data = data.split("@");
-          version = data[0];
-          url = data[1];
-
-          message.innerHTML = "Loging in...";
-          const script = document.createElement("script");
-          script.src = url;
-          document.getElementById("container").appendChild(script);
-
-          let checkExist = setInterval(function () {
-            if (typeof tests !== "undefined") {
-              localStorage.setItem("tests", JSON.stringify(tests));
-              localStorage.setItem("file", url);
-              localStorage.setItem("version", version);
-              localStorage.setItem("userId", userId);
-
-              message.innerHTML = "Logged in succesfully";
-
-              window.location.href = "./search.html";
-
-              clearInterval(checkExist);
-            }
-          }, 100);
-        }
-      })
-      .catch((error) => {
-        message.innerHTML = `Error: ${error}`;
-        console.error("Error:", error);
-      });
+  if (from == "logout") {
+    localStorage.clear();
+    addMessage("Logged Out succesfully!");
   } else {
-    message.innerHTML = "No userId provided! Forgot to log in?";
+    const token = getToken();
+
+    if (token != null) {
+      var isOk = true;
+
+      addMessage("Waiting for server");
+
+      fetch(`https://konradowy.pythonanywhere.com?userId=${token}`)
+        .then((response) => {
+          text = response.json();
+          if (!response.ok) {
+            isOk = false;
+          }
+          return text;
+        })
+
+        .then((data) => {
+          if (!isOk) {
+            message.innerHTML = data;
+          } else {
+            const version = data.version;
+            const url = data.url;
+            const userName = data.userName;
+
+            addMessage("Loging in...");
+            const script = document.createElement("script");
+            script.src = url;
+            document.getElementById("container").appendChild(script);
+
+            let checkExist = setInterval(function () {
+              if (typeof tests !== "undefined") {
+                localStorage.clear();
+                localStorage.setItem("tests", JSON.stringify(tests));
+                localStorage.setItem("file", url);
+                localStorage.setItem("version", version);
+                localStorage.setItem("userId", token);
+                localStorage.setItem("userName", userName);
+
+                addMessage("Logged in succesfully");
+
+                window.location.href = "./search.html";
+
+                clearInterval(checkExist);
+              }
+            }, 100);
+          }
+        })
+        .catch((error) => {
+          message.innerHTML = `Error: ${error}`;
+          console.error("Error:", error);
+        });
+    }
   }
 </script>

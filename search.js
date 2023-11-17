@@ -1,3 +1,5 @@
+const username = "Andrzej";
+
 // gets number from end of string
 // if no number is found returns null
 function getNumberFromEnd(str) {
@@ -65,13 +67,14 @@ function display(results, querry) {
 
   // fix alignment of last row
   //TODO: reimplement this to work on all screen widths
-  objects.push(document.createElement("li"));
-  objects.push(document.createElement("li"));
-  objects.push(document.createElement("li"));
-  objects.push(document.createElement("li"));
 
   document.getElementById("test_results").replaceChildren(...objects);
 }
+
+logout = function () {
+  localStorage.clear();
+  window.location = "./login.html?from=logout";
+};
 
 // search
 onsubmit = async function (event) {
@@ -84,7 +87,7 @@ onsubmit = async function (event) {
 document.getElementById("search_querry").addEventListener("input", onsubmit);
 
 // relog users that have used older versions of app
-if (localStorage.getItem("version") != "1.3") {
+if (localStorage.getItem("version") != "2.1") {
   window.location.href = `./login.html?userId=${localStorage.getItem("userId") || ""}`;
 }
 
@@ -95,3 +98,5 @@ const urlParams = Object.fromEntries(new URLSearchParams(new URL(document.URL).s
 let querry = history.state?.querry || urlParams.querry || "";
 
 searchMeanger(querry);
+
+document.getElementById("name").innerHTML = localStorage.getItem("userName");
