@@ -1,6 +1,4 @@
-const username = "Andrzej";
-
-// gets number from end of string
+// gets nr from end of string
 // if no number is found returns null
 function getNumberFromEnd(str) {
   const matches = str.match(/\d+$/);
@@ -48,9 +46,12 @@ function display(results, querry) {
 
     // highlights querry in title
     // is not case sensitive
-    let regex = new RegExp(`(${escapeRegEx(querry)})`, "gi");
-    title = test.title.replace(regex, '<span class="highlight">$1</span>');
-
+    if (querry.length != 0) {
+      let regex = new RegExp(`(${escapeRegEx(querry)})`, "gi");
+      title = test.title.replace(regex, '<span class="highlight">$1</span>');
+    } else {
+      title = test.title;
+    }
     div.innerHTML = `
         <a href=./view.html?id=${test.id} class="exam hover">
             <span class="title">${title}</span>
@@ -64,9 +65,6 @@ function display(results, querry) {
         </a>`;
     objects.push(div);
   });
-
-  // fix alignment of last row
-  //TODO: reimplement this to work on all screen widths
 
   document.getElementById("test_results").replaceChildren(...objects);
 }
@@ -98,5 +96,6 @@ const urlParams = Object.fromEntries(new URLSearchParams(new URL(document.URL).s
 let querry = history.state?.querry || urlParams.querry || "";
 
 searchMeanger(querry);
+querry = document.getElementById("search_querry").value = querry;
 
 document.getElementById("name").innerHTML = localStorage.getItem("userName");
