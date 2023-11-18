@@ -2,10 +2,10 @@
     <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
     <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
     <g id="SVGRepo_iconCarrier">
-        <path d="M4 16L13 16" stroke="#9E9FA0" stroke-width="1.5" stroke-linecap="round"></path>
-        <path d="M6 11H13" stroke="#9E9FA0" stroke-width="1.5" stroke-linecap="round"></path>
-        <path d="M8 6L13 6" stroke="#9E9FA0" stroke-width="1.5" stroke-linecap="round"></path>
-        <path d="M17 4L17 20L20 16" stroke="#9E9FA0" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 16L13 16" stroke="#000" stroke-width="1.5" stroke-linecap="round"></path>
+        <path d="M6 11H13" stroke="#000" stroke-width="1.5" stroke-linecap="round"></path>
+        <path d="M8 6L13 6" stroke="#000" stroke-width="1.5" stroke-linecap="round"></path>
+        <path d="M17 4L17 20L20 16" stroke="#000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
         </path>
     </g>
 </svg>

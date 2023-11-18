@@ -157,6 +157,7 @@ input {
 }
 
 .nameicon::before {
+  filter: brightness(0) saturate(100%) invert(30%) sepia(98%) saturate(1505%) hue-rotate(189deg) brightness(94%) contrast(101%) !important;
   background: url(./assets/user.svg) no-repeat center center/80% auto;
   width: 40px;
   height: 40px;
@@ -195,4 +196,9 @@ input[type="radio"] {
 
 #sortReverse:checked + label {
   transform: scaleY(-1);
+}
+
+.icon::before,
+#sortReverse + label {
+  filter: brightness(0) saturate(100%) invert(44%) sepia(0%) saturate(12%) hue-rotate(190deg) brightness(97%) contrast(84%);
 }
