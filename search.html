@@ -23,6 +23,9 @@
         <input type="text" id="search_querry" name="querry" autocomplete="off" placeholder="Szukaj..." autofocus />
       </div>
       <div id="sort">
+        <input type="checkbox" id="sortReverse" />
+        <label for="sortReverse"></label>
+
         <input type="radio" id="srotAz" name="sort" value="srotAz" checked />
         <label for="srotAz" class="icon alphabet"></label>
 
@@ -34,13 +37,8 @@
 
         <input type="radio" id="sortQuestions" name="sort" value="sortQuestions" />
         <label for="sortQuestions" class="icon questions"></label>
-
-        <input type="checkbox" id="sortReverse" />
-        <label for="sortReverse"></label>
       </div>
     </div>
-    <ol id="test_results">
-      Forgor to log in?
-    </ol>
+    <ol id="test_results"></ol>
   </body>
 </html>

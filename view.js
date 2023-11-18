@@ -19,14 +19,14 @@ const test = findtest(id);
 let objects = [];
 
 test.questions.forEach((question, index) => {
-  list = ``;
+  let list = ``;
   const correct = question.correct;
   for (let i = 0; i < question.anwsers.length; i++) {
     const anwser = question.anwsers[i];
     list += `<li ${anwser == correct ? "class='correct'" : ""} >${anwser}</li>`;
   }
-  let element = `${question.question}<ul> ${list}</ul>`;
-  let div = document.createElement("li");
+  const element = `${question.question}<ul> ${list}</ul>`;
+  const div = document.createElement("li");
   div.className = "question hover";
   div.innerHTML = element;
   div.id = `q${index}`;
@@ -45,7 +45,7 @@ document.title = `${test.title} - Odpowiedzi do testu`;
 
 solve = function (e) {
   if (confirm(`Czy napewno chcesz rozwiązać test "${test.title}"?`)) {
-    var win = window.open(`https://akademia.el12.pl/testy/rozwiazywanie-testu/${test.id}`, "_blank");
+    const win = window.open(`https://akademia.el12.pl/testy/rozwiazywanie-testu/${test.id}`, "_blank");
     win.focus();
   }
 };

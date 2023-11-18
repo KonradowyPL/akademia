@@ -14,8 +14,6 @@ function sort() {
   localStorage.setItem("sortKey", key);
   localStorage.setItem("sortReverse", reverse);
 
-  console.log(reverse);
-
   keys = {
     srotAz: (test) => test.title,
     sortPoints: (test) => test.maxPoints,
@@ -23,7 +21,7 @@ function sort() {
     sortQuestions: (test) => test.questions.length,
   };
 
-  thisKey = keys[key];
+  const thisKey = keys[key];
 
   tests.sort((e1, e2) => {
     const a = thisKey(e1);
@@ -35,9 +33,7 @@ function sort() {
 
 // searches tests by querry and given id
 function search(querry) {
-  querry = querry.toLowerCase();
-
-  let num = getNumberFromEnd(querry);
+  const num = getNumberFromEnd(querry);
   let results = [];
   tests.forEach((test) => {
     if (
@@ -67,7 +63,7 @@ function display(results, querry) {
   let objects = [];
 
   results.forEach((test) => {
-    let div = document.createElement("li");
+    const div = document.createElement("li");
 
     // highlights querry in title
     // is not case sensitive
@@ -101,7 +97,7 @@ logout = function () {
 
 // search
 onsubmit = async function (event) {
-  querry = document.getElementById("search_querry").value.toLowerCase();
+  const querry = document.getElementById("search_querry").value.toLowerCase();
   history.replaceState({ querry }, null, null);
   searchMeanger(querry);
 };
