@@ -10,19 +10,19 @@
 }
 
 .alphabet::before {
-  background: url(./alphabet.svg) no-repeat center center/20px auto;
+  background: url(./assets/alphabet.svg) no-repeat center center/20px auto;
 }
 
 .points::before {
-  background: url(./trophy.svg) no-repeat center center/20px auto;
+  background: url(./assets/trophy.svg) no-repeat center center/20px auto;
 }
 
 .questions::before {
-  background: url(./ask.svg) no-repeat center center/20px auto;
+  background: url(./assets/ask.svg) no-repeat center center/20px auto;
 }
 
 .id::before {
-  background: url(./key.svg) no-repeat center center/20px auto;
+  background: url(./assets/key.svg) no-repeat center center/20px auto;
 }
 
 .icon {
@@ -115,7 +115,7 @@ h1::after {
 }
 
 #search_submit {
-  background: url(./search.svg) no-repeat center center/80% auto;
+  background: url(./assets/search.svg) no-repeat center center/80% auto;
   width: calc(min(6vw, 50px));
   height: calc(min(6vw, 50px));
 
@@ -157,7 +157,7 @@ input {
 }
 
 .nameicon::before {
-  background: url(./user.svg) no-repeat center center/80% auto;
+  background: url(./assets/user.svg) no-repeat center center/80% auto;
   width: 40px;
   height: 40px;
 }
@@ -188,9 +188,9 @@ input[type="radio"] {
 
 #sortReverse + label {
   display: inline-block;
-  width: 40px; /* adjust as needed */
-  height: 40px; /* adjust as needed */
-  background: url(./sort.svg) no-repeat center center/80% auto;
+  width: 40px;
+  height: 40px;
+  background: url(./assets/sort.svg) no-repeat center center/80% auto;
 }
 
 #sortReverse:checked + label {
