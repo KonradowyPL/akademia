@@ -8,6 +8,12 @@ function getNumberFromEnd(str) {
   return null;
 }
 
+// escapes regEx characters
+function escapeRegEx(string) {
+  // $& means the whole matched string
+  return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
 function sort() {
   key = document.querySelector('input[name="sort"]:checked').value;
   reverse = document.getElementById("sortReverse").checked ? 1 : -1;
@@ -33,17 +39,21 @@ function sort() {
 
 // searches tests by querry and given id
 function search(querry) {
+  if (querry === "") {
+    return tests;
+  }
   const num = getNumberFromEnd(querry);
   let results = [];
   tests.forEach((test) => {
     if (
-      test.title.toLowerCase().includes(querry) ||
       // id string has to start with querry
-      String(test.id).startsWith(num)
+      String(test.id).startsWith(num) ||
+      test.title.toLowerCase().includes(querry)
     ) {
       results.push(test);
     }
   });
+
   return results;
 }
 
@@ -52,19 +62,12 @@ function searchMeanger(querry) {
   display(results, querry);
 }
 
-// escapes regEx characters
-function escapeRegEx(string) {
-  // $& means the whole matched string
-  return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-}
-
 // displays results
 function display(results, querry) {
+  console.time("display");
   let objects = [];
 
   results.forEach((test) => {
-    const div = document.createElement("li");
-
     // highlights querry in title
     // is not case sensitive
     if (querry.length != 0) {
@@ -73,21 +76,42 @@ function display(results, querry) {
     } else {
       title = test.title;
     }
-    div.innerHTML = `
-        <a href=./view.html?id=${test.id} class="exam hover">
-            <span class="title">${title}</span>
 
-            <div class="footer">
-              <span class="id icon">${test.id}</span>
-              <span class="questions icon">${test.questions.length}</span>
-              <span class="points icon">${test.maxPoints}</span>
-            </div>
+    const div = document.createElement("li");
+    const anchor = document.createElement("a");
+    const titleEle = document.createElement("span");
+    const footer = document.createElement("div");
+    const testId = document.createElement("span");
+    const testQuestions = document.createElement("span");
+    const testPoints = document.createElement("span");
 
-        </a>`;
+    anchor.classList = "exam hover";
+    anchor.href = `./view.html?id=${test.id}`;
+
+    footer.classList = "footer";
+    titleEle.classList = "title";
+    testPoints.classList = "points icon";
+    testQuestions.classList = "questions icon";
+    testId.classList = "id icon";
+
+    titleEle.innerHTML = title;
+    testId.innerText = test.id;
+    testQuestions.innerText = test.questions.length;
+    testPoints.innerText = test.maxPoints;
+
+    anchor.appendChild(titleEle);
+    footer.appendChild(testId);
+    footer.appendChild(testQuestions);
+    footer.appendChild(testPoints);
+    anchor.appendChild(footer);
+
+    div.appendChild(anchor);
     objects.push(div);
   });
 
   document.getElementById("test_results").replaceChildren(...objects);
+
+  console.timeEnd("display");
 }
 
 logout = function () {
