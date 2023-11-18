@@ -6,19 +6,19 @@ h4 {
 }
 
 #maxPoints::before {
-  background: url(./trophy.svg) no-repeat center center/20px auto;
+  background: url(./assets/trophy.svg) no-repeat center center/20px auto;
 }
 
 #lenght::before {
-  background: url(./ask.svg) no-repeat center center/20px auto;
+  background: url(./assets/ask.svg) no-repeat center center/20px auto;
 }
 
 #_id::before {
-  background: url(./key.svg) no-repeat center center/20px auto;
+  background: url(./assets/key.svg) no-repeat center center/20px auto;
 }
 
 .newtab::after {
-  background: url(./link.svg) no-repeat center center/20px auto;
+  background: url(./assets/link.svg) no-repeat center center/20px auto;
 }
 
 .icons {
