@@ -1,5 +1,3 @@
-var INTERVALiD = null;
-
 // gets nrumber from end of string
 // if no number is found returns null
 function getNumberFromEnd(str) {
@@ -10,12 +8,24 @@ function getNumberFromEnd(str) {
   return null;
 }
 
+// highlights querry in title
+// is not case sensitive
+function highlightQuerry(title, querry) {
+  if (querry.length != 0) {
+    let regex = new RegExp(`(${escapeRegEx(querry)})`, "gi");
+    return title.replace(regex, '<span class="highlight">$1</span>');
+  } else {
+    return title;
+  }
+}
+
 // escapes regEx characters
 function escapeRegEx(string) {
   // $& means the whole matched string
   return string.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
 
+// sorts tests json obj for selected mode
 function sort() {
   key = document.querySelector('input[name="sort"]:checked').value;
   reverse = document.getElementById("sortReverse").checked ? 1 : -1;
@@ -39,47 +49,72 @@ function sort() {
   });
 }
 
+function initSorting() {
+  //adds event listiner to sort and refresh results
+  addListiner = function (ele) {
+    ele.addEventListener("change", function () {
+      sort();
+      onsubmit();
+    });
+  };
+
+  key = localStorage.getItem("sortKey");
+
+  // loops over all radio buttons for sorting
+  document.querySelectorAll('input[type="radio"][name="sort"]').forEach((radio) => {
+    // selects previous sorting mode from localstorage
+    if (radio.value == key) {
+      radio.checked = true;
+    }
+    addListiner(radio);
+  });
+  // adds listiner for reverse option
+  addListiner(document.getElementById("sortReverse"));
+  if (localStorage.getItem("sortReverse") == 1) {
+    document.getElementById("sortReverse").checked = true;
+  }
+
+  // accually sorts
+  sort();
+}
+
 // searches tests by querry and given id
 function search(querry) {
+  // cancels previous async search querry
   clearTimeout(INTERVALiD);
+
   const parent = document.getElementById("test_results");
-  const groupSize = 4;
+  const groupSize = document.readyState === "complete" ? 4 : tests.length;
   var children = parent.childElementCount;
-
   var results = 0;
-
   const num = getNumberFromEnd(querry);
 
   searchFrom = function (from) {
     var sesionResults = 0;
     let index = from;
 
+    // loops until there are groupSize results
     for (index = from; sesionResults < groupSize && index < tests.length; index++) {
       const test = tests[index];
       if (
-        querry === "" ||
-        // id string has to start with querry
-        String(test.id).startsWith(num) ||
-        test.title.toLowerCase().includes(querry)
+        querry === "" || // if querry is none
+        String(test.id).startsWith(num) || // if querry is none
+        test.title.toLowerCase().includes(querry) // test title includes querry
       ) {
+        // checks if it sould add child of replace it
         if (results >= children) {
-          console.log("add");
           addResult(test, querry, results);
         } else {
-          console.log("replace");
-
           replaceResult(test, querry, results);
         }
+
         results++;
         sesionResults++;
       }
     }
+    // calls next time after site is redrawn
     if (from + groupSize < tests.length) {
-      if (document.readyState === "complete") {
-        INTERVALiD = setTimeout(searchFrom, 0, index);
-      } else {
-        searchFrom(index);
-      }
+      INTERVALiD = setTimeout(searchFrom, 0, index);
     } else {
       // remove extra children
       const children = parent.childElementCount;
@@ -88,26 +123,16 @@ function search(querry) {
       }
     }
   };
-
   searchFrom(0);
 }
 
-function searchMeanger(querry) {
-  const results = search(querry);
-}
-
+// replaces results with new content
 function replaceResult(test, querry, index) {
   const child = document.querySelector(`#test_results >:nth-child(${index + 1})`);
   const footer = child.querySelector("a > .footer");
 
-  // highlights querry in title
-  // is not case sensitive
-  if (querry.length != 0) {
-    let regex = new RegExp(`(${escapeRegEx(querry)})`, "gi");
-    title = test.title.replace(regex, '<span class="highlight">$1</span>');
-  } else {
-    title = test.title;
-  }
+  title = highlightQuerry(test.title, querry);
+
   child.href = `./view.html?id=${test.id}`;
   child.querySelector("a > .title").innerHTML = title;
   footer.querySelector(":nth-child(1)").innerText = test.id;
@@ -117,16 +142,9 @@ function replaceResult(test, querry, index) {
 
 // displays results
 function addResult(test, querry, index) {
-  const parent = document.getElementById("test_results");
+  title = highlightQuerry(test.title, querry);
 
-  // highlights querry in title
-  // is not case sensitive
-  if (querry.length != 0) {
-    let regex = new RegExp(`(${escapeRegEx(querry)})`, "gi");
-    title = test.title.replace(regex, '<span class="highlight">$1</span>');
-  } else {
-    title = test.title;
-  }
+  const parent = document.getElementById("test_results");
 
   const div = document.createElement("li");
   const anchor = document.createElement("a");
@@ -160,52 +178,41 @@ function addResult(test, querry, index) {
   parent.appendChild(div);
 }
 
+// logs out user
 logout = function () {
   localStorage.clear();
   window.location = "./login.html?from=logout";
 };
 
 // search
-onsubmit = async function (event) {
+onsubmit = function () {
   const querry = document.getElementById("search_querry").value.toLowerCase();
   history.replaceState({ querry }, null, null);
-  searchMeanger(querry);
+  search(querry);
 };
-
-document.getElementById("search_querry").addEventListener("input", onsubmit);
 
 // relog users that have used older versions of app
 if (localStorage.getItem("version") != "2.1") {
   window.location.href = `./login.html?userId=${localStorage.getItem("userId") || ""}`;
 }
 
+// adds event listiner for changes in input
+document.getElementById("search_querry").addEventListener("input", onsubmit);
 tests = JSON.parse(localStorage.getItem("tests"));
 
-key = localStorage.getItem("sortKey");
-document.querySelectorAll('input[type="radio"][name="sort"]').forEach((radio) => {
-  if (radio.value == key) {
-    radio.checked = true;
-  }
-  radio.addEventListener("change", function () {
-    sort();
-    onsubmit();
-  });
-});
-document.getElementById("sortReverse").addEventListener("change", function () {
-  sort();
-  onsubmit();
-});
-if (localStorage.getItem("sortReverse") == 1) {
-  document.getElementById("sortReverse").checked = true;
-}
+initSorting();
 
-sort();
+var INTERVALiD = null;
 
+// get url params
 const urlParams = Object.fromEntries(new URLSearchParams(new URL(document.URL).search));
 
+// gets querry from state of url params
 let querry = history.state?.querry || urlParams.querry || "";
 
-searchMeanger(querry);
+//sets querry to input and searchs
 querry = document.getElementById("search_querry").value = querry;
+search(querry);
 
+// displays user name
 document.getElementById("name").innerHTML = localStorage.getItem("userName");
