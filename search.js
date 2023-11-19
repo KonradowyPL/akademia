@@ -42,10 +42,9 @@ function sort() {
 // searches tests by querry and given id
 function search(querry) {
   clearTimeout(INTERVALiD);
-  console.timeEnd("search");
-  console.time("search");
   const parent = document.getElementById("test_results");
   const groupSize = 4;
+  var children = parent.childElementCount;
 
   var results = 0;
 
@@ -63,7 +62,14 @@ function search(querry) {
         String(test.id).startsWith(num) ||
         test.title.toLowerCase().includes(querry)
       ) {
-        display(test, querry, results);
+        if (results >= children) {
+          console.log("add");
+          addResult(test, querry, results);
+        } else {
+          console.log("replace");
+
+          replaceResult(test, querry, results);
+        }
         results++;
         sesionResults++;
       }
@@ -80,7 +86,6 @@ function search(querry) {
       for (let i = results; i < children; i++) {
         parent.removeChild(parent.children[parent.childElementCount - 1]);
       }
-      console.timeEnd("search");
     }
   };
 
@@ -91,10 +96,28 @@ function searchMeanger(querry) {
   const results = search(querry);
 }
 
+function replaceResult(test, querry, index) {
+  const child = document.querySelector(`#test_results >:nth-child(${index + 1})`);
+  const footer = child.querySelector("a > .footer");
+
+  // highlights querry in title
+  // is not case sensitive
+  if (querry.length != 0) {
+    let regex = new RegExp(`(${escapeRegEx(querry)})`, "gi");
+    title = test.title.replace(regex, '<span class="highlight">$1</span>');
+  } else {
+    title = test.title;
+  }
+  child.href = `./view.html?id=${test.id}`;
+  child.querySelector("a > .title").innerHTML = title;
+  footer.querySelector(":nth-child(1)").innerText = test.id;
+  footer.querySelector(":nth-child(2)").innerText = test.questions.length;
+  footer.querySelector(":nth-child(3)").innerText = test.maxPoints;
+}
+
 // displays results
-function display(test, querry, index) {
+function addResult(test, querry, index) {
   const parent = document.getElementById("test_results");
-  var children = parent.childElementCount;
 
   // highlights querry in title
   // is not case sensitive
@@ -134,11 +157,7 @@ function display(test, querry, index) {
   anchor.appendChild(footer);
 
   div.appendChild(anchor);
-  if (index >= children) {
-    parent.appendChild(div);
-  } else {
-    parent.replaceChild(div, parent.children[index]);
-  }
+  parent.appendChild(div);
 }
 
 logout = function () {
