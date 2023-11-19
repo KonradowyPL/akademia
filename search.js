@@ -41,90 +41,104 @@ function sort() {
 
 // searches tests by querry and given id
 function search(querry) {
-  if (querry === "") {
-    return tests;
-  }
-  const num = getNumberFromEnd(querry);
-  let results = [];
-  tests.forEach((test) => {
-    if (
-      // id string has to start with querry
-      String(test.id).startsWith(num) ||
-      test.title.toLowerCase().includes(querry)
-    ) {
-      results.push(test);
-    }
-  });
+  clearTimeout(INTERVALiD);
+  console.timeEnd("search");
+  console.time("search");
+  const parent = document.getElementById("test_results");
+  const groupSize = 4;
 
-  return results;
+  var results = 0;
+
+  const num = getNumberFromEnd(querry);
+
+  searchFrom = function (from) {
+    var sesionResults = 0;
+    let index = from;
+
+    for (index = from; sesionResults < groupSize && index < tests.length; index++) {
+      const test = tests[index];
+      if (
+        querry === "" ||
+        // id string has to start with querry
+        String(test.id).startsWith(num) ||
+        test.title.toLowerCase().includes(querry)
+      ) {
+        display(test, querry, results);
+        results++;
+        sesionResults++;
+      }
+    }
+    if (from + groupSize < tests.length) {
+      if (document.readyState === "complete") {
+        INTERVALiD = setTimeout(searchFrom, 0, index);
+      } else {
+        searchFrom(index);
+      }
+    } else {
+      // remove extra children
+      const children = parent.childElementCount;
+      for (let i = results; i < children; i++) {
+        parent.removeChild(parent.children[parent.childElementCount - 1]);
+      }
+      console.timeEnd("search");
+    }
+  };
+
+  searchFrom(0);
 }
 
 function searchMeanger(querry) {
   const results = search(querry);
-  display(results, querry);
 }
 
 // displays results
-function display(results, querry) {
-  console.time("display");
-  console.log(results.length);
-  let objects = [];
+function display(test, querry, index) {
   const parent = document.getElementById("test_results");
   var children = parent.childElementCount;
 
-  results.forEach((test, index) => {
-    // highlights querry in title
-    // is not case sensitive
-    if (querry.length != 0) {
-      let regex = new RegExp(`(${escapeRegEx(querry)})`, "gi");
-      title = test.title.replace(regex, '<span class="highlight">$1</span>');
-    } else {
-      title = test.title;
-    }
-
-    const div = document.createElement("li");
-    const anchor = document.createElement("a");
-    const titleEle = document.createElement("span");
-    const footer = document.createElement("div");
-    const testId = document.createElement("span");
-    const testQuestions = document.createElement("span");
-    const testPoints = document.createElement("span");
-
-    anchor.classList = "exam hover";
-    anchor.href = `./view.html?id=${test.id}`;
-
-    footer.classList = "footer";
-    titleEle.classList = "title";
-    testPoints.classList = "points icon";
-    testQuestions.classList = "questions icon";
-    testId.classList = "id icon";
-
-    titleEle.innerHTML = title;
-    testId.innerText = test.id;
-    testQuestions.innerText = test.questions.length;
-    testPoints.innerText = test.maxPoints;
-
-    anchor.appendChild(titleEle);
-    footer.appendChild(testId);
-    footer.appendChild(testQuestions);
-    footer.appendChild(testPoints);
-    anchor.appendChild(footer);
-
-    div.appendChild(anchor);
-    if (index >= children) {
-      parent.appendChild(div);
-    } else {
-      parent.replaceChild(div, parent.children[index]);
-    }
-  });
-
-  // remove extra children
-  children = parent.childElementCount;
-  for (let i = results.length; i < children; i++) {
-    parent.removeChild(parent.children[parent.childElementCount - 1]);
+  // highlights querry in title
+  // is not case sensitive
+  if (querry.length != 0) {
+    let regex = new RegExp(`(${escapeRegEx(querry)})`, "gi");
+    title = test.title.replace(regex, '<span class="highlight">$1</span>');
+  } else {
+    title = test.title;
   }
 
-  console.timeEnd("display");
+  const div = document.createElement("li");
+  const anchor = document.createElement("a");
+  const titleEle = document.createElement("span");
+  const footer = document.createElement("div");
+  const testId = document.createElement("span");
+  const testQuestions = document.createElement("span");
+  const testPoints = document.createElement("span");
+
+  anchor.classList = "exam hover";
+  anchor.href = `./view.html?id=${test.id}`;
+
+  footer.classList = "footer";
+  titleEle.classList = "title";
+  testPoints.classList = "points icon";
+  testQuestions.classList = "questions icon";
+  testId.classList = "id icon";
+
+  titleEle.innerHTML = title;
+  testId.innerText = test.id;
+  testQuestions.innerText = test.questions.length;
+  testPoints.innerText = test.maxPoints;
+
+  anchor.appendChild(titleEle);
+  footer.appendChild(testId);
+  footer.appendChild(testQuestions);
+  footer.appendChild(testPoints);
+  anchor.appendChild(footer);
+
+  div.appendChild(anchor);
+  if (index >= children) {
+    parent.appendChild(div);
+  } else {
+    parent.replaceChild(div, parent.children[index]);
+  }
 }
 
 logout = function () {
