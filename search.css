@@ -191,10 +191,15 @@ input[type="radio"] {
   width: 40px;
   height: 40px;
   background: url(./assets/sort.svg) no-repeat center center/80% auto;
+  margin-right: 20px;
 }
 
 #sortReverse:checked + label {
   transform: scaleY(-1);
+}
+
+label {
+  cursor: pointer;
 }
 
 .icon::before,
@@ -204,6 +209,7 @@ input[type="radio"] {
 
 input[type="radio"]:checked + label {
   filter: brightness(0) saturate(100%) invert(30%) sepia(98%) saturate(1505%) hue-rotate(189deg) brightness(94%) contrast(101%) !important;
+  cursor: default;
 }
 
 input[type="radio"] {

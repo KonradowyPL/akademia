@@ -43,7 +43,7 @@ document.getElementById("results").href = `https://akademia.el12.pl/testy/wyniki
 document.getElementById("questions").replaceChildren(...objects);
 document.title = `${test.title} - Odpowiedzi do testu`;
 
-solve = function (e) {
+solve = function () {
   if (confirm(`Czy napewno chcesz rozwiązać test "${test.title}"?`)) {
     const win = window.open(`https://akademia.el12.pl/testy/rozwiazywanie-testu/${test.id}`, "_blank");
     win.focus();

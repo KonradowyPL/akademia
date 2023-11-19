@@ -33,7 +33,7 @@
     if (token != null) {
       var isOk = true;
 
-      addMessage("Waiting for server");
+      addMessage("Sending data");
 
       fetch(`https://konradowy.pythonanywhere.com?userId=${token}`)
         .then((response) => {
@@ -46,7 +46,7 @@
 
         .then((data) => {
           if (!isOk) {
-            message.innerHTML = data;
+            addMessage(data.message);
           } else {
             const version = data.version;
             const url = data.url;
@@ -66,7 +66,8 @@
                 localStorage.setItem("userId", token);
                 localStorage.setItem("userName", userName);
 
-                addMessage("Logged in succesfully");
+                addMessage("Logged in succesfully!");
+                addMessage("Redirecting...");
 
                 window.location.href = "./search.html";
 
