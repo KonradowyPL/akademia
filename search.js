@@ -1,3 +1,5 @@
+var INTERVALiD = null;
+
 // gets nrumber from end of string
 // if no number is found returns null
 function getNumberFromEnd(str) {
@@ -65,9 +67,12 @@ function searchMeanger(querry) {
 // displays results
 function display(results, querry) {
   console.time("display");
+  console.log(results.length);
   let objects = [];
+  const parent = document.getElementById("test_results");
+  var children = parent.childElementCount;
 
-  results.forEach((test) => {
+  results.forEach((test, index) => {
     // highlights querry in title
     // is not case sensitive
     if (querry.length != 0) {
@@ -106,10 +111,18 @@ function display(results, querry) {
     anchor.appendChild(footer);
 
     div.appendChild(anchor);
-    objects.push(div);
+    if (index >= children) {
+      parent.appendChild(div);
+    } else {
+      parent.replaceChild(div, parent.children[index]);
+    }
   });
 
-  document.getElementById("test_results").replaceChildren(...objects);
+  // remove extra children
+  children = parent.childElementCount;
+  for (let i = results.length; i < children; i++) {
+    parent.removeChild(parent.children[parent.childElementCount - 1]);
+  }
 
   console.timeEnd("display");
 }
