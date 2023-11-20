@@ -20,14 +20,7 @@
     return token;
   }
 
-  const message = document.getElementById("message");
-  const urlParams = new URLSearchParams(window.location.search);
-  const from = urlParams.get("from");
-
-  if (from == "logout") {
-    localStorage.clear();
-    addMessage("Logged Out succesfully!");
-  } else {
+  function login() {
     const token = getToken();
 
     if (token != null) {
@@ -82,4 +75,23 @@
         });
     }
   }
+
+  function doAction(action) {
+    if (action == "logout") {
+      localStorage.clear();
+      addMessage("Logged Out succesfully!");
+    } else if (action == "relog") {
+      addMessage("relogging...");
+      document.location.href = `./login.html?action=login&userId=${localStorage.getItem("userId")}`;
+    } else if (action == "login") {
+      login();
+    } else {
+      addMessage("Non-existent action provided!");
+    }
+  }
+  const message = document.getElementById("message");
+  const urlParams = new URLSearchParams(window.location.search);
+  const action = urlParams.get("action");
+
+  doAction(action);
 </script>

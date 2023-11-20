@@ -181,7 +181,7 @@ function addResult(test, querry, index) {
 // logs out user
 logout = function () {
   localStorage.clear();
-  window.location = "./login.html?from=logout";
+  window.location = "./login.html?action=logout";
 };
 
 // search
@@ -193,7 +193,7 @@ onsubmit = function () {
 
 // relog users that have used older versions of app
 if (localStorage.getItem("version") != "2.1") {
-  window.location.href = `./login.html?userId=${localStorage.getItem("userId") || ""}`;
+  window.location.href = `./login.html?action=relog`;
 }
 
 // adds event listiner for changes in input
