@@ -133,7 +133,7 @@ function replaceResult(test, querry, index) {
 
   title = highlightQuerry(test.title, querry);
 
-  child.href = `./view.html?id=${test.id}`;
+  child.querySelector("a").href = `./view.html?id=${test.id}`;
   child.querySelector("a > .title").innerHTML = title;
   footer.querySelector(":nth-child(1)").innerText = test.id;
   footer.querySelector(":nth-child(2)").innerText = test.questions.length;
