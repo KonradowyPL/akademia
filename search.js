@@ -29,8 +29,8 @@ function escapeRegEx(string) {
 function sort() {
   key = document.querySelector('input[name="sort"]:checked').value;
   reverse = document.getElementById("sortReverse").checked ? 1 : -1;
-  localStorage.setItem("sortKey", key);
-  localStorage.setItem("sortReverse", reverse);
+  sessionStorage.setItem("sortKey", key);
+  sessionStorage.setItem("sortReverse", reverse);
 
   keys = {
     srotAz: (test) => test.title,
@@ -58,7 +58,7 @@ function initSorting() {
     });
   };
 
-  key = localStorage.getItem("sortKey");
+  key = sessionStorage.getItem("sortKey");
 
   // loops over all radio buttons for sorting
   document.querySelectorAll('input[type="radio"][name="sort"]').forEach((radio) => {
@@ -70,7 +70,7 @@ function initSorting() {
   });
   // adds listiner for reverse option
   addListiner(document.getElementById("sortReverse"));
-  if (localStorage.getItem("sortReverse") == 1) {
+  if (sessionStorage.getItem("sortReverse") == 1) {
     document.getElementById("sortReverse").checked = true;
   }
 
@@ -133,7 +133,7 @@ function replaceResult(test, querry, index) {
 
   title = highlightQuerry(test.title, querry);
 
-  child.href = `./view.html?id=${test.id}`;
+  child.querySelector("a").href = `./view.html?id=${test.id}`;
   child.querySelector("a > .title").innerHTML = title;
   footer.querySelector(":nth-child(1)").innerText = test.id;
   footer.querySelector(":nth-child(2)").innerText = test.questions.length;
@@ -181,6 +181,7 @@ function addResult(test, querry, index) {
 // logs out user
 logout = function () {
   localStorage.clear();
+  sessionStorage.clear();
   window.location = "./login.html?action=logout";
 };
 
@@ -191,28 +192,58 @@ onsubmit = function () {
   search(querry);
 };
 
-// relog users that have used older versions of app
-if (localStorage.getItem("version") != "2.1") {
-  window.location.href = `./login.html?action=relog`;
+initAll = function () {
+  // adds event listiner for changes in input
+  document.getElementById("search_querry").addEventListener("input", onsubmit);
+  tests = JSON.parse(sessionStorage.getItem("tests"));
+
+  initSorting();
+
+  // get url params
+  const urlParams = Object.fromEntries(new URLSearchParams(new URL(document.URL).search));
+
+  // gets querry from state of url params
+  let querry = history.state?.querry || urlParams.querry || "";
+
+  //sets querry to input and searchs
+  querry = document.getElementById("search_querry").value = querry;
+  search(querry);
+
+  // displays user name
+  document.getElementById("name").innerHTML = sessionStorage.getItem("userName");
+};
+
+function addMessage(val) {
+  const ele = document.createElement("span");
+  ele.innerHTML = val + "<br>";
+  message.appendChild(ele);
 }
 
-// adds event listiner for changes in input
-document.getElementById("search_querry").addEventListener("input", onsubmit);
-tests = JSON.parse(localStorage.getItem("tests"));
+function initLogin() {
+  message = document.getElementById("message");
 
-initSorting();
+  // relog users that have used older versions of app
+  if (localStorage.getItem("version") != "2.1") {
+    window.location.href = `./login.html?action=relog`;
+  } else if (sessionStorage.tests === undefined) {
+    addMessage("Loging in automatically");
+    addMessage("This might take a while...");
+
+    login(localStorage.getItem("userId")).then(() => {
+      console.log("logged in!");
+      const testResults = document.getElementById("test_results");
+      testResults.removeChild(message);
+
+      initAll();
+    });
+  } else {
+    const testResults = document.getElementById("test_results");
+    testResults.removeChild(message);
+
+    initAll();
+  }
+}
 
 var INTERVALiD = null;
 
-// get url params
-const urlParams = Object.fromEntries(new URLSearchParams(new URL(document.URL).search));
-
-// gets querry from state of url params
-let querry = history.state?.querry || urlParams.querry || "";
-
-//sets querry to input and searchs
-querry = document.getElementById("search_querry").value = querry;
-search(querry);
-
-// displays user name
-document.getElementById("name").innerHTML = localStorage.getItem("userName");
+initLogin();

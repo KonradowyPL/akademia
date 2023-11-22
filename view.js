@@ -13,7 +13,7 @@ const urlParams = Object.fromEntries(new URLSearchParams(new URL(document.URL).s
 const id = Number(urlParams.id);
 const from = urlParams.from;
 
-const tests = JSON.parse(localStorage.getItem("tests"));
+const tests = JSON.parse(sessionStorage.getItem("tests"));
 const test = findtest(id);
 
 let objects = [];

@@ -1,5 +1,6 @@
 <span id="message"></span>
 <div id="container"></div>
+<script src="./login.js"></script>
 <script>
   function addMessage(val) {
     const ele = document.createElement("span");
@@ -8,7 +9,7 @@
   }
 
   function getToken() {
-    var token = urlParams.get("userId");
+    var token = urlParams.get("userId") || localStorage.getItem("userId");
     if ((token || "").length == 0) {
       token = prompt("Input your token here. If you do not have it ask owner to make one for you.");
     }
@@ -19,78 +20,24 @@
     }
     return token;
   }
-
-  function login() {
-    const token = getToken();
-
-    if (token != null) {
-      var isOk = true;
-
-      addMessage("Sending data");
-
-      fetch(`https://konradowy.pythonanywhere.com?userId=${token}`)
-        .then((response) => {
-          text = response.json();
-          if (!response.ok) {
-            isOk = false;
-          }
-          return text;
-        })
-
-        .then((data) => {
-          if (!isOk) {
-            addMessage(data.message);
-          } else {
-            const version = data.version;
-            const url = data.url;
-            const userName = data.userName;
-
-            addMessage("Loging in...");
-            const script = document.createElement("script");
-            script.src = url;
-            document.getElementById("container").appendChild(script);
-
-            let checkExist = setInterval(function () {
-              if (typeof tests !== "undefined") {
-                localStorage.clear();
-                localStorage.setItem("tests", JSON.stringify(tests));
-                localStorage.setItem("file", url);
-                localStorage.setItem("version", version);
-                localStorage.setItem("userId", token);
-                localStorage.setItem("userName", userName);
-
-                addMessage("Logged in succesfully!");
-                addMessage("Redirecting...");
-
-                window.location.href = "./search.html";
-
-                clearInterval(checkExist);
-              }
-            }, 100);
-          }
-        })
-        .catch((error) => {
-          message.innerHTML = `Error: ${error}`;
-          console.error("Error:", error);
-        });
-    }
-  }
-
   function doAction(action) {
     if (action == "logout") {
       localStorage.clear();
       addMessage("Logged Out succesfully!");
-    } else if (action == "relog") {
+    } else if (action == "relog" || action == "login") {
       addMessage("relogging...");
-      document.location.href = `./login.html?action=login&userId=${localStorage.getItem("userId")}`;
-    } else if (action == "login") {
-      login();
+
+      login(token).then(() => {
+        document.location.href = "./search.html";
+      });
     } else {
-      addMessage("Non-existent action provided!");
+      addMessage("Wrong action!");
     }
   }
+
   const message = document.getElementById("message");
   const urlParams = new URLSearchParams(window.location.search);
+  const token = getToken();
   const action = urlParams.get("action");
 
   doAction(action);
