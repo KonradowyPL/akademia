@@ -21,6 +21,7 @@ function login(token) {
               localStorage.clear();
               sessionStorage.clear();
             }
+            reject();
           } else {
             const version = data.version;
             const url = data.url;
@@ -53,7 +54,7 @@ function login(token) {
         .catch((error) => {
           message.innerHTML = `Error: ${error}`;
           console.error("Error:", error);
-          resolve();
+          reject();
         });
     }
   });

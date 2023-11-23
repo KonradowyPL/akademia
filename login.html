@@ -23,9 +23,19 @@
   function doAction(action) {
     if (action == "logout") {
       localStorage.clear();
+      sessionStorage.clear();
       addMessage("Logged Out succesfully!");
-    } else if (action == "relog" || action == "login") {
+      window.location.href = "./login.html?action=loggedout";
+    } else if (action == "loggedout") {
+      addMessage("Logged Out succesfully!");
+    } else if (action == "relog") {
       addMessage("relogging...");
+
+      login(localStorage.getItem("userId")).then(() => {
+        document.location.href = "./search.html";
+      });
+    } else if (action == "login") {
+      const token = getToken();
 
       login(token).then(() => {
         document.location.href = "./search.html";
@@ -37,7 +47,6 @@
 
   const message = document.getElementById("message");
   const urlParams = new URLSearchParams(window.location.search);
-  const token = getToken();
   const action = urlParams.get("action");
 
   doAction(action);
