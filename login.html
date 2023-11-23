@@ -9,7 +9,7 @@
   }
 
   function getToken() {
-    var token = urlParams.get("userId") || localStorage.getItem("userId");
+    var token = urlParams.get("userId") || localStorage.getItem("userId") || "";
     if ((token || "").length == 0) {
       token = prompt("Input your token here. If you do not have it ask owner to make one for you.");
     }
@@ -29,11 +29,17 @@
     } else if (action == "loggedout") {
       addMessage("Logged Out succesfully!");
     } else if (action == "relog") {
-      addMessage("relogging...");
+      const token = localStorage.getItem("userId");
 
-      login(localStorage.getItem("userId")).then(() => {
-        document.location.href = "./search.html";
-      });
+      if (token != "") {
+        addMessage("relogging...");
+
+        login(token).then(() => {
+          document.location.href = "./search.html";
+        });
+      } else {
+        document.location.href = "./login.html?action=login";
+      }
     } else if (action == "login") {
       const token = getToken();
 
