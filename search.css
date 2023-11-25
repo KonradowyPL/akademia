@@ -123,6 +123,7 @@ h1::after {
 #search_querry {
   flex-grow: 1;
   font-size: calc(min(4vw, 30px));
+  outline: 0;
 }
 
 .header {
