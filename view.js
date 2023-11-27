@@ -25,7 +25,7 @@ test.questions.forEach((question, index) => {
     const anwser = question.anwsers[i];
     list += `<li ${anwser == correct ? "class='correct'" : ""} >${anwser}</li>`;
   }
-  const element = `${question.question}<ul> ${list}</ul>`;
+  const element = `${index + 1}: ${question.question}<ul> ${list}</ul>`;
   const div = document.createElement("li");
   div.className = "question hover";
   div.innerHTML = element;
